@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
@@ -118,6 +118,10 @@ require("lazy").setup({
 
 	{ "numToStr/Comment.nvim", opts = {} },
 
+	{ "f-person/git-blame.nvim", opts = {} },
+
+	{ "github/copilot.vim", opts = {} },
+
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -188,14 +192,6 @@ require("lazy").setup({
 						theme = "ivy",
 						-- disables netrw and use telescope-file-browser in its place
 						hijack_netrw = true,
-						mappings = {
-							["i"] = {
-								-- your custom insert mode mappings
-							},
-							["n"] = {
-								-- your custom normal mode mappings
-							},
-						},
 					},
 				},
 			})
@@ -217,7 +213,9 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-			vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+			vim.keymap.set("n", "<space>fb", function()
+				require("telescope").extensions.file_browser.file_browser()
+			end)
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -407,6 +405,19 @@ require("lazy").setup({
 					end,
 				},
 			})
+		end,
+	},
+	{
+		"dense-analysis/ale",
+		config = function()
+			-- Configuration goes here.
+			local g = vim.g
+
+			g.ale_ruby_rubocop_auto_correct_all = 1
+
+			g.ale_linters = {
+				lua = { "lua_language_server" },
+			}
 		end,
 	},
 
