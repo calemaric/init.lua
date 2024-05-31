@@ -194,6 +194,24 @@ require("lazy").setup({
 						hijack_netrw = true,
 					},
 				},
+				pickers = {
+					find_files = {
+						hidden = true,
+						find_command = {
+							"rg",
+							"--files",
+							"--hidden",
+							"--glob=!**/.git/*",
+							"--glob=!**/.idea/*",
+							"--glob=!**/.vscode/*",
+							"--glob=!**/build/*",
+							"--glob=!**/dist/*",
+							"--glob=!**/yarn.lock",
+							"--glob=!**/package-lock.json",
+							"--glob=!**/.github/*",
+						},
+					},
+				},
 			})
 
 			-- Enable Telescope extensions if they are installed
