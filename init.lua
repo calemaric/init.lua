@@ -391,7 +391,7 @@ require("lazy").setup({
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
 				tsserver = {},
-				--
+				html = {},
 
 				lua_ls = {
 					settings = {
@@ -642,7 +642,9 @@ require("lazy").setup({
 		},
 		config = function(_, opts)
 			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
+			if vim.loop.os_uname().sysname == "Windows_NT" then
+				require("nvim-treesitter.install").compilers = { "clang" }
+			end
 			-- Prefer git instead of curl in order to improve connectivity in some environments
 			require("nvim-treesitter.install").prefer_git = true
 			---@diagnostic disable-next-line: missing-fields
