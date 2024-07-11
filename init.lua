@@ -189,7 +189,11 @@ require("lazy").setup({
 						require("telescope.themes").get_dropdown(),
 					},
 					file_browser = {
-						theme = "ivy",
+						theme = "dropdown",
+
+						display_stat = { date = true },
+
+						hidden = { file_browser = true, folder_browser = true },
 						-- disables netrw and use telescope-file-browser in its place
 						hijack_netrw = true,
 					},
@@ -583,12 +587,14 @@ require("lazy").setup({
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("nightfox")
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
+
+	{ "EdenEast/nightfox.nvim" },
 
 	-- Highlight todo, notes, etc in comments
 	{
