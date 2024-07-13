@@ -3,11 +3,8 @@ return {
 	config = function()
 		vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
-		local calemaric_Fugitive = vim.api.nvim_create_augroup("calemaric_Fugitive", {})
-
 		local autocmd = vim.api.nvim_create_autocmd
 		autocmd("BufWinEnter", {
-			group = calemaric_Fugitive,
 			pattern = "*",
 			callback = function()
 				if vim.bo.ft ~= "fugitive" then
