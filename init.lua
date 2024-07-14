@@ -45,6 +45,8 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
+vim.opt.termguicolors = true
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
@@ -141,7 +143,6 @@ require("lazy").setup({
 			preset = "modern",
 		},
 	},
-
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
