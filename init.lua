@@ -2,9 +2,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
 
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -122,7 +119,7 @@ require("lazy").setup({
 
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
-		event = "VimEnter", -- Sets the loading event to 'VimEnter'
+		event = "VeryLazy",
 		keys = {
 			{ "<leader>c", group = "[C]ode" },
 			{ "<leader>c_", hidden = true },
@@ -138,10 +135,11 @@ require("lazy").setup({
 			{ "<leader>t_", hidden = true },
 			{ "<leader>w", group = "[W]orkspace" },
 			{ "<leader>w_", hidden = true },
+			{ "<leader>f", group = "[F]iles" },
 		},
-		config = function() -- This is the function that runs, AFTER loading
-			require("which-key").setup()
-		end,
+		opts = {
+			preset = "modern",
+		},
 	},
 
 	{ -- Fuzzy Finder (files, lsp, etc)
@@ -229,10 +227,15 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-			vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+			vim.keymap.set(
+				"n",
+				"<space>fb",
+				":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+				{ desc = "Open [F]ile [b]rowser in current buffer directory" }
+			)
 			vim.keymap.set("n", "<space>fB", function()
 				require("telescope").extensions.file_browser.file_browser()
-			end)
+			end, { desc = "Open [F]ile [B]rowser in root" })
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -420,12 +423,12 @@ require("lazy").setup({
 		lazy = false,
 		keys = {
 			{
-				"<leader>f",
+				"<leader>cf",
 				function()
 					require("conform").format({ async = true, lsp_fallback = true })
 				end,
 				mode = "",
-				desc = "[F]ormat buffer",
+				desc = "[C]ode [F]ormat buffer",
 			},
 		},
 		opts = {
