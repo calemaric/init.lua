@@ -170,6 +170,9 @@ require("lazy").setup({
 		config = function()
 			require("telescope").setup({
 				defaults = {
+					preview = {
+						filesize_limit = 0.2, -- MB
+					},
 					mappings = {
 						i = {
 							["<C-j>"] = "move_selection_next",
@@ -400,6 +403,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+	{ "LunarVim/bigfile.nvim", opts = {} },
 	{
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
