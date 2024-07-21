@@ -567,9 +567,7 @@ require("lazy").setup({
 			end
 		end,
 	},
-	{ import = "lazy.treesitter" },
-	{ import = "lazy.fugitive" },
-	{ import = "lazy.debugger" },
+	{ import = "plugins" },
 }, {
 	ui = {
 		icons = vim.g.have_nerd_font and {} or {
