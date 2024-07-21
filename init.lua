@@ -105,7 +105,6 @@ require("lazy").setup({
 	{ "f-person/git-blame.nvim", opts = {} },
 
 	{ "github/copilot.vim" },
-
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -525,16 +524,14 @@ require("lazy").setup({
 	},
 
 	{
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
+		"EdenEast/nightfox.nvim",
+		priority = 1000,
 		init = function()
 			vim.cmd.colorscheme("nightfox")
 
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
-
-	{ "EdenEast/nightfox.nvim" },
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -570,29 +567,9 @@ require("lazy").setup({
 			end
 		end,
 	},
-	{ -- Highlight, edit, and navigate code
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		opts = {
-			ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
-			auto_install = true,
-			highlight = {
-				enable = true,
-			},
-			indent = { enable = true },
-		},
-		config = function(_, opts)
-			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-			if vim.loop.os_uname().sysname == "Windows_NT" then
-				require("nvim-treesitter.install").compilers = { "clang" }
-			end
-			-- Prefer git instead of curl in order to improve connectivity in some environments
-			require("nvim-treesitter.install").prefer_git = true
-			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup(opts)
-		end,
-	},
+	{ import = "lazy.treesitter" },
 	{ import = "lazy.fugitive" },
+	{ import = "lazy.debugger" },
 }, {
 	ui = {
 		icons = vim.g.have_nerd_font and {} or {
