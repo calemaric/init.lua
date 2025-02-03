@@ -121,23 +121,6 @@ require("lazy").setup({
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		keys = {
-			{ "<leader>c", group = "[C]ode" },
-			{ "<leader>c_", hidden = true },
-			{ "<leader>d", group = "[D]ocument" },
-			{ "<leader>d_", hidden = true },
-			{ "<leader>h", group = "Git [H]unk" },
-			{ "<leader>h_", hidden = true },
-			{ "<leader>r", group = "[R]ename" },
-			{ "<leader>r_", hidden = true },
-			{ "<leader>s", group = "[S]earch" },
-			{ "<leader>s_", hidden = true },
-			{ "<leader>t", group = "[T]oggle" },
-			{ "<leader>t_", hidden = true },
-			{ "<leader>w", group = "[W]orkspace" },
-			{ "<leader>w_", hidden = true },
-			{ "<leader>f", group = "[F]iles" },
-		},
 		opts = {
 			preset = "modern",
 		},
@@ -173,14 +156,14 @@ require("lazy").setup({
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+					map("<leader>gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
 					-- Find references for the word under your cursor.
-					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+					map("<leader>gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+					map("<leader>gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
 
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
@@ -213,7 +196,7 @@ require("lazy").setup({
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header.
-					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					map("<leader>gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.server_capabilities.documentHighlightProvider then
