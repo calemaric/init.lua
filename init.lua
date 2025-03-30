@@ -139,6 +139,7 @@ require("lazy").setup({
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
+			{ "saghen/blink.cmp" },
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -227,8 +228,7 @@ require("lazy").setup({
 				end,
 			})
 
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local servers = {
 				gopls = {},
@@ -250,6 +250,13 @@ require("lazy").setup({
 				},
 			}
 
+			for server, config in pairs(servers) do
+				-- passing config.capabilities to blink.cmp merges with the capabilities in your
+				-- `opts[server].capabilities, if you've defined it
+				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				require("lspconfig")[server].setup(config)
+			end
+
 			require("mason").setup()
 
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -266,6 +273,9 @@ require("lazy").setup({
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
+				automatic_installation = true,
+				automatic_setup = true,
+				ensure_installed = vim.tbl_keys(servers),
 			})
 		end,
 	},
@@ -274,19 +284,6 @@ require("lazy").setup({
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		opts = {},
-	},
-	{
-		"dense-analysis/ale",
-		config = function()
-			-- Configuration goes here.
-			local g = vim.g
-
-			g.ale_ruby_rubocop_auto_correct_all = 1
-
-			g.ale_linters = {
-				lua = { "lua_language_server" },
-			}
-		end,
 	},
 
 	{ -- Autoformat
@@ -335,78 +332,6 @@ require("lazy").setup({
 				vim.g.disable_autoformat = false
 			end, {
 				desc = "Re-enable autoformat-on-save",
-			})
-		end,
-	},
-	{ -- Autocompletion
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-
-			{ "rafamadriz/friendly-snippets" },
-			-- Snippet Engine & its associated nvim-cmp source
-			{
-				"L3MON4D3/LuaSnip",
-				build = (function()
-					return "make install_jsregexp"
-				end)(),
-				dependencies = {},
-			},
-			"saadparwaiz1/cmp_luasnip",
-
-			-- Adds other completion capabilities.
-			--  nvim-cmp does not ship with all sources by default. They are split
-			--  into multiple repos for maintenance purposes.
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-		},
-		config = function()
-			-- See `:help cmp`
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-			luasnip.config.setup({})
-			require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
-				},
-				completion = { completeopt = "menu,menuone,noinsert" },
-
-				-- No, but seriously. Please read `:help ins-completion`, it is really good!
-				mapping = cmp.mapping.preset.insert({
-					-- Select the [n]ext item
-					["<C-j>"] = cmp.mapping.select_next_item(),
-					-- Select the [p]revious item
-					["<C-k>"] = cmp.mapping.select_prev_item(),
-
-					-- Scroll the documentation window [b]ack / [f]orward
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- If you prefer more traditional completion keymaps,
-
-					-- Manually trigger a completion from nvim-cmp.
-					["<C-Space>"] = cmp.mapping.complete({}),
-
-					["<C-l>"] = cmp.mapping(function()
-						if luasnip.expand_or_locally_jumpable() then
-							luasnip.expand_or_jump()
-						end
-					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function()
-						if luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { "i", "s" }),
-				}),
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "path" },
-				},
 			})
 		end,
 	},
