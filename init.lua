@@ -96,8 +96,6 @@ require("lazy").setup({
 
 	{ "numToStr/Comment.nvim", opts = {} },
 
-	{ "f-person/git-blame.nvim", opts = {} },
-
 	{ "github/copilot.vim" },
 	{
 		"lewis6991/gitsigns.nvim",
