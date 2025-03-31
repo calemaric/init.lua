@@ -56,6 +56,8 @@ return {
 			end,
 		})
 
+		vim.diagnostic.config({ virtual_text = true })
+
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		local servers = {
@@ -76,6 +78,21 @@ return {
 					},
 				},
 			},
+			eslint = {
+				flags = {
+					allow_incremental_sync = false,
+					debounce_text_changes = 1000,
+				},
+				settings = {
+					packageManager = "pnpm",
+				},
+				on_attach = function(client, bufnr)
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = bufnr,
+						command = "EslintFixAll",
+					})
+				end,
+			},
 		}
 
 		for server, config in pairs(servers) do
@@ -86,9 +103,11 @@ return {
 		require("mason").setup()
 
 		local ensure_installed = vim.tbl_keys(servers or {})
+
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
 		})
+
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
