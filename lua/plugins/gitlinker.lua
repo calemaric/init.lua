@@ -10,25 +10,25 @@ return {
 			},
 		})
 
-		vim.api.nvim_set_keymap(
+		vim.keymap.set(
 			"n",
 			"<leader>go",
 			'<cmd>lua require("gitlinker").get_buf_range_url("n", {action_callback = require("gitlinker.actions").open_in_browser})<cr>',
 			{ silent = true, desc = "[O]pen permalink in browser" }
 		)
-		vim.api.nvim_set_keymap(
+		vim.keymap.set(
 			"v",
 			"<leader>go",
 			'<cmd>lua require("gitlinker").get_buf_range_url("v", {action_callback = require("gitlinker.actions").open_in_browser})<cr>',
 			{ silent = true, desc = "[O]pen permalink range in browser" }
 		)
-		vim.api.nvim_set_keymap(
+		vim.keymap.set(
 			"n",
 			"<leader>cy",
 			'<cmd>lua require("gitlinker").get_buf_range_url("n", {action_callback = require("gitlinker.actions").copy_to_clipboard})<cr>',
 			{ silent = true, desc = "[C]opy permalink to clipboard" }
 		)
-		vim.api.nvim_set_keymap(
+		vim.keymap.set(
 			"v",
 			"<leader>cy",
 			'<cmd>lua require("gitlinker").get_buf_range_url("v", {action_callback = require("gitlinker.actions").copy_to_clipboard})<cr>',
