@@ -14,7 +14,7 @@ return {
 		signature = { enabled = true },
 
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
 		},
 	},
 	opts_extend = { "sources.default" },
