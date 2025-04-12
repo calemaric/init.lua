@@ -17,11 +17,16 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>aic", function()
-			require("codecompanion").toggle()
-		end, { desc = "[A][I] [C]hat" })
-		vim.keymap.set("v", "<leader>aic", function()
-			require("codecompanion").toggle()
-		end, { desc = "[A][I] [C]hat" })
+		vim.keymap.set({ "n", "v" }, "<C-a>", require("codecompanion").actions, { noremap = true, silent = true })
+		vim.keymap.set(
+			{ "n", "v" },
+			"<LocalLeader>a",
+			require("codecompanion").toggle,
+			{ noremap = true, silent = true }
+		)
+		vim.keymap.set("v", "ga", require("codecompanion").add, { noremap = true, silent = true })
+
+		-- Expand 'cc' into 'CodeCompanion' in the command line
+		vim.cmd([[cab cc CodeCompanion]])
 	end,
 }
