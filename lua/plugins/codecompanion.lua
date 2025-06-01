@@ -15,6 +15,13 @@ return {
 					adapter = "copilot",
 				},
 			},
+			extensions = {
+				vectorcode = {
+					opts = {
+						add_tool = true,
+					},
+				},
+			},
 		})
 
 		vim.keymap.set({ "n", "v" }, "<C-a>", require("codecompanion").actions, { noremap = true, silent = true })
