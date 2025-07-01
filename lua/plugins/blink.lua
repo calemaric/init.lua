@@ -1,5 +1,6 @@
 return {
 	"saghen/blink.cmp",
+	build = "cargo build --release",
 	dependencies = { "fang2hou/blink-copilot", "rafamadriz/friendly-snippets" },
 
 	---@module 'blink.cmp'
