@@ -6,7 +6,49 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 	},
 	config = function()
+		local constants = {
+			USER_ROLE = "user",
+			SYSTEM_ROLE = "system",
+		}
+
 		require("codecompanion").setup({
+			prompt_library = {
+				["Story Planning Workflow"] = {
+					strategy = "workflow",
+					description = "Guide user from story acceptance criteria to dev and test plans",
+					opts = {
+						index = 5,
+						short_name = "story",
+						is_default = false,
+					},
+					prompts = {
+						{
+							{
+								role = constants.USER_ROLE,
+								content = [[Acceptance Criteria:
+
+
+---------
+
+Break down the work into logical tasks, considering architecture, dependencies, and integration points.
+
+For each step, specify what needs to be done, why it is necessary, and any relevant considerations (e.g., refactoring, code reuse, documentation, testing hooks). Ensure the plan is actionable and covers all acceptance criteria.
+
+]],
+								opts = { auto_submit = false },
+							},
+						},
+						{
+							{
+								role = constants.USER_ROLE,
+								content = [[Now, create a comprehensive test plan to verify that all acceptance criteria are met. 
+For each criterion, describe the test approach (manual/automated), test cases, expected results, and any edge cases to consider. Include both positive and negative scenarios. If relevant, specify tools, frameworks, or data needed for testing. Ensure the plan is clear enough for another developer or QA to follow.]],
+								opts = { auto_submit = true },
+							},
+						},
+					},
+				},
+			},
 			strategies = {
 				chat = {
 					adapter = "copilot",
