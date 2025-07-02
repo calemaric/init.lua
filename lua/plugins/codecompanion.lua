@@ -31,8 +31,10 @@ return {
 				vectorcode = {
 					opts = {
 						add_tool = true,
-						tool_opts = {
-							chunk_mode = true,
+						query = {
+							tool_opts = {
+								chunk_mode = true,
+							},
 						},
 					},
 				},
