@@ -13,11 +13,11 @@ return {
 
 		require("codecompanion").setup({
 			prompt_library = {
-				["Story Planning Workflow"] = {
+				["Story plan"] = {
 					strategy = "workflow",
-					description = "Guide user from story acceptance criteria to dev and test plans",
+					description = "Guide user from story acceptance criteria to dev plans based on acceptance criteria.",
 					opts = {
-						index = 5,
+						index = 0,
 						short_name = "story",
 						is_default = false,
 					},
@@ -32,7 +32,7 @@ return {
 
 Break down the work into logical tasks, considering architecture, dependencies, and integration points.
 
-For each step, specify what needs to be done, why it is necessary, and any relevant considerations (e.g., refactoring, code reuse, documentation, testing hooks). Ensure the plan is actionable and covers all acceptance criteria.
+Make a list of search terms to determine what needs to be updated based on the plan.
 
 ]],
 								opts = { auto_submit = false },
@@ -41,9 +41,43 @@ For each step, specify what needs to be done, why it is necessary, and any relev
 						{
 							{
 								role = constants.USER_ROLE,
-								content = [[Now, create a comprehensive test plan to verify that all acceptance criteria are met. 
-For each criterion, describe the test approach (manual/automated), test cases, expected results, and any edge cases to consider. Include both positive and negative scenarios. If relevant, specify tools, frameworks, or data needed for testing. Ensure the plan is clear enough for another developer or QA to follow.]],
+								content = [[Use @{vectorcode_query} to search the codebase. Then summarize the proposed locations and give explanation why they need to be updated.]],
 								opts = { auto_submit = true },
+							},
+						},
+						{
+							{
+								role = constants.USER_ROLE,
+								content = [[Make the final plan and and provide next actions. For each step, specify what needs to be done, why it is necessary, and any relevant considerations (e.g., refactoring, code reuse, documentation, testing hooks). Ensure the plan is actionable and covers all acceptance criteria.]],
+								opts = { auto_submit = true },
+							},
+						},
+					},
+				},
+				["Test plan"] = {
+					strategy = "workflow",
+					description = "Create test plan for the story.",
+					opts = {
+						index = 1,
+						short_name = "testplan",
+						is_default = false,
+					},
+					prompts = {
+						{
+							{
+								role = constants.USER_ROLE,
+								content = [[Acceptance Criteria:
+
+
+---------
+
+@{mcp}
+
+Create a comprehensive test plan based on the git diff to verify that all acceptance criteria are met. 
+For each criterion, describe the test approach (manual/automated), test cases, expected results, and any edge cases to consider. Include both positive and negative scenarios. If relevant, specify tools, frameworks, or data needed for testing. Ensure the plan is clear enough for another developer or QA to follow.
+
+]],
+								opts = { auto_submit = false },
 							},
 						},
 					},
@@ -73,8 +107,8 @@ For each criterion, describe the test approach (manual/automated), test cases, e
 				vectorcode = {
 					opts = {
 						add_tool = true,
-						query = {
-							tool_opts = {
+						tool_opts = {
+							query = {
 								chunk_mode = true,
 							},
 						},
