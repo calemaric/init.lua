@@ -86,13 +86,6 @@ For each criterion, describe the test approach (manual/automated), test cases, e
 			strategies = {
 				chat = {
 					adapter = "copilot",
-					tools = {
-						opts = {
-							default_tools = {
-								"next_edit_suggestion",
-							},
-						},
-					},
 				},
 				inline = {
 					adapter = "copilot",
