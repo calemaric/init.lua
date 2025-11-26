@@ -85,10 +85,10 @@ For each criterion, describe the test approach (manual/automated), test cases, e
 			},
 			strategies = {
 				chat = {
-					adapter = "copilot",
+					adapter = "claude_code",
 				},
 				inline = {
-					adapter = "copilot",
+					adapter = "claude_code",
 				},
 			},
 			display = {
