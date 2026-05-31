@@ -1,7 +1,8 @@
 return {
 	"saghen/blink.cmp",
-	build = "cargo build --release",
-	dependencies = { "fang2hou/blink-copilot", "rafamadriz/friendly-snippets" },
+	version = "2.*",
+	build = function() require("blink.cmp").build():wait(30000) end,
+	dependencies = { "saghen/blink.lib", "fang2hou/blink-copilot", "rafamadriz/friendly-snippets" },
 
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config

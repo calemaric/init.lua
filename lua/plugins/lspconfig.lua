@@ -34,7 +34,8 @@ return {
 
 				map("ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols,
+					"[W]orkspace [S]ymbols")
 
 				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 
@@ -67,39 +68,23 @@ return {
 
 		vim.diagnostic.config({ virtual_text = true })
 
-		local capabilities = require("blink.cmp").get_lsp_capabilities()
+		-- Global capabilities for all servers
+		vim.lsp.config("*", {
+			capabilities = require("blink.cmp").get_lsp_capabilities(),
+		})
 
-		local servers = {
-			gopls = {},
-			html = {
-				init_options = {
-					provide_formatter = false,
-				},
-			},
-			somesass_ls = {},
-			markdown_oxide = {},
-			lua_ls = {},
-		}
+		-- Server-specific overrides
+		vim.lsp.config("html", {
+			init_options = { provide_formatter = false },
+		})
 
-		for server, config in pairs(servers) do
-			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-			require("lspconfig")[server].setup(config)
-		end
+		vim.lsp.enable({ "gopls", "html", "somesass_ls", "markdown_oxide", "lua_ls", "zls" })
 
 		require("mason").setup()
 
 		require("mason-lspconfig").setup({
-			handlers = {
-				function(server_name)
-					local server = servers[server_name] or {}
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
-				end,
-			},
-			automatic_installation = true,
-			automatic_setup = true,
+			ensure_installed = { "gopls", "html", "somesass_ls", "markdown_oxide", "lua_ls" },
 			automatic_enable = true,
-			ensure_installed = vim.tbl_keys(servers),
 		})
 	end,
 }

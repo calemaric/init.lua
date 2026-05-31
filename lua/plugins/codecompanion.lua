@@ -15,7 +15,8 @@ return {
 			prompt_library = {
 				["Story plan"] = {
 					strategy = "workflow",
-					description = "Guide user from story acceptance criteria to dev plans based on acceptance criteria.",
+					description =
+					"Guide user from story acceptance criteria to dev plans based on acceptance criteria.",
 					opts = {
 						index = 0,
 						short_name = "story",
@@ -41,14 +42,16 @@ Make a list of search terms to determine what needs to be updated based on the p
 						{
 							{
 								role = constants.USER_ROLE,
-								content = [[Use @{vectorcode_query} to search the codebase. Then summarize the proposed locations and give explanation why they need to be updated.]],
+								content =
+								[[Use @{vectorcode_query} to search the codebase. Then summarize the proposed locations and give explanation why they need to be updated.]],
 								opts = { auto_submit = true },
 							},
 						},
 						{
 							{
 								role = constants.USER_ROLE,
-								content = [[Make the final plan and and provide next actions. For each step, specify what needs to be done, why it is necessary, and any relevant considerations (e.g., refactoring, code reuse, documentation, testing hooks). Ensure the plan is actionable and covers all acceptance criteria.]],
+								content =
+								[[Make the final plan and and provide next actions. For each step, specify what needs to be done, why it is necessary, and any relevant considerations (e.g., refactoring, code reuse, documentation, testing hooks). Ensure the plan is actionable and covers all acceptance criteria.]],
 								opts = { auto_submit = true },
 							},
 						},
@@ -73,7 +76,7 @@ Make a list of search terms to determine what needs to be updated based on the p
 
 @{mcp}
 
-Create a comprehensive test plan based on the git diff to verify that all acceptance criteria are met. 
+Create a comprehensive test plan based on the git diff to verify that all acceptance criteria are met.
 For each criterion, describe the test approach (manual/automated), test cases, expected results, and any edge cases to consider. Include both positive and negative scenarios. If relevant, specify tools, frameworks, or data needed for testing. Ensure the plan is clear enough for another developer or QA to follow.
 
 ]],
@@ -97,24 +100,7 @@ For each criterion, describe the test approach (manual/automated), test cases, e
 				},
 			},
 			extensions = {
-				vectorcode = {
-					opts = {
-						add_tool = true,
-						tool_opts = {
-							query = {
-								chunk_mode = true,
-							},
-						},
-					},
-				},
-				mcphub = {
-					callback = "mcphub.extensions.codecompanion",
-					opts = {
-						show_result_in_chat = true, -- Show mcp tool results in chat
-						make_vars = true, -- Convert resources to #variables
-						make_slash_commands = true, -- Add prompts as /slash commands
-					},
-				},
+
 			},
 		})
 
