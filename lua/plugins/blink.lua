@@ -2,7 +2,7 @@ return {
 	"saghen/blink.cmp",
 	version = "2.*",
 	build = function() require("blink.cmp").build():wait(30000) end,
-	dependencies = { "saghen/blink.lib", "fang2hou/blink-copilot", "rafamadriz/friendly-snippets" },
+	dependencies = { "saghen/blink.lib", "rafamadriz/friendly-snippets" },
 
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
@@ -19,18 +19,7 @@ return {
 		signature = { enabled = true },
 
 		sources = {
-			default = { "copilot", "lsp", "path", "snippets", "buffer", "codecompanion" },
-			providers = {
-				copilot = {
-					name = "copilot",
-					module = "blink-copilot",
-					score_offset = 100,
-					async = true,
-					opts = {
-						max_completions = 3,
-					},
-				},
-			},
+			default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
 		},
 	},
 }
